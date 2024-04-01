@@ -13,10 +13,10 @@ createThought(req, res) {
   let savedThought; // Variable to hold the created thought
   Thought.create(req.body)
   .then((dbThoughtData) => {
-      savedThought = dbThoughtData; // Save the thought here
+      savedThought = dbThoughtData; 
       // Make sure you're referencing the correct field name, userId not userID
       return User.findOneAndUpdate(
-          {_id: req.body.userId}, // Field names are case-sensitive
+          {_id: req.body.userId}, 
           {$push:{ thoughts: dbThoughtData._id}},
           {new: true}
       )
@@ -25,7 +25,7 @@ createThought(req, res) {
       // Check if the user was found and updated
       if (userData) {
           // Now you can send back the thought data
-          res.json(savedThought); // Send back the thought, not the user
+          res.json(savedThought); 
       } else {
           // If the user was not found, send an appropriate response
           res.status(404).json({ message: 'User not found' });
