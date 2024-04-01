@@ -10,19 +10,33 @@ getAllThoughts(req, res) {
 // get one thought by it's id
 // create thought to a user
 createThought(req, res) {
-   Thought.create(req.body)
-   .then((dbThoughtData) => {
-       return User.findOneAndUpdate(
-           {_id:req.body.userID},
-           {$push:{ thoughts:dbThoughtData._id}},
-           {new:true}
-
-       )
-    
-   })
-   .then(userData => res.json(userData))
-   .catch((err) => res.status(500).json(err));
+  let savedThought; // Variable to hold the created thought
+  Thought.create(req.body)
+  .then((dbThoughtData) => {
+      savedThought = dbThoughtData; // Save the thought here
+      // Make sure you're referencing the correct field name, userId not userID
+      return User.findOneAndUpdate(
+          {_id: req.body.userId}, // Field names are case-sensitive
+          {$push:{ thoughts: dbThoughtData._id}},
+          {new: true}
+      )
+  })
+  .then(userData => {
+      // Check if the user was found and updated
+      if (userData) {
+          // Now you can send back the thought data
+          res.json(savedThought); // Send back the thought, not the user
+      } else {
+          // If the user was not found, send an appropriate response
+          res.status(404).json({ message: 'User not found' });
+      }
+  })
+  .catch((err) => {
+      console.error('Error in createThought:', err);
+      res.status(500).json(err);
+  });
 },
+
 //update thought by it's id
 updateThought(req, res) {
     Thought.findOneAndUpdate({

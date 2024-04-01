@@ -43,19 +43,24 @@ const userController = {
     },
     // addFriend
     addFriend(req, res) {
-        console.log('You are adding a friend');
-        console.log(req.body);
-        User.findOneAndUpdate({
-            _id: req.params.id
-        }, {
-            $addToSet: {
-                friends: req.params.friendsId
-            }
-        }, {
-            runValidators: true,
-            new: true
-        }).then((user) => !user ? res.status(404).json({ message: 'No friend found with that ID :(' }) : res.json(user)).catch((err) => res.status(500).json(err));
-    },
+        User.findOneAndUpdate(
+          { _id: req.params.userId }, // Ensure this parameter name matches the route
+          { $addToSet: { friends: req.body.friendId } }, // Assuming `friendId` is what you send in the request body
+          { new: true }
+        )
+        .then(user => {
+          if (!user) {
+            res.status(404).json({ message: 'No user found with that ID' });
+          } else {
+            res.json(user);
+          }
+        })
+        .catch(err => {
+          console.error('Error when adding friend:', err);
+          res.status(500).json(err);
+        });
+      },
+      
     // removeFriend
     removeFriend(req, res) {
         User.findOneAndUpdate({
