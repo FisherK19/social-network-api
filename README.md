@@ -51,10 +51,12 @@ https://drive.google.com/file/d/1YAnAoDRZtVdtoiC8BPKJE7s6TvHtzjVE/view
 - DELETE /api/thoughts/:thoughtId/reactions/:reactionId: Remove a reaction from a thought
 
 # Technologies Used
-Node.js
-Express.js
-MongoDB
-Mongoose
+- Node.js
+- Express.js
+- MongoDB
+- Mongoose
+- ChatGpt
+- google
 
 # License
 This project is licensed under the MIT License.
