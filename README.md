@@ -21,6 +21,8 @@ THEN I am able to successfully create and delete reactions to thoughts and add a
 
 ## Walk-through Link:
 
+https://drive.google.com/file/d/1YAnAoDRZtVdtoiC8BPKJE7s6TvHtzjVE/view
+
 # Installation
 - Clone the repository
 - Install dependencies: npm install
